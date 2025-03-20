@@ -10,14 +10,20 @@ import {
   Paper,
   Typography,
   CircularProgress,
+  TablePagination,
+  Box,
 } from "@mui/material";
 import { Book } from "@/models";
 import { bookServices } from "@/services";
 import BookRow from "./BookRow";
+import { useHandleChangePage } from "@/hooks";
 
-const BookTable: React.FC = () => {
+const BookTable = () => {
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } =
+    useHandleChangePage(10);
 
   useEffect(() => {
     const loadBooks = async () => {
@@ -31,38 +37,67 @@ const BookTable: React.FC = () => {
   }, []);
 
   return (
-    <TableContainer component={Paper} sx={{ maxWidth: 900, margin: "auto", mt: 2 }}>
-      <Typography variant="h6" sx={{ padding: 1 }}>
+    <Box>
+      <Typography variant="h6" sx={{ padding: 1, margin: "auto" }}>
         Kho học liệu số
       </Typography>
-      {loading ? (
-        <Typography align="center" sx={{ padding: 2 }}>
-          <CircularProgress />
-        </Typography>
-      ) : (
-        <Table>
-          <TableHead>
-            <TableRow sx={{ backgroundColor: "#333" }}>
-              <TableCell sx={{ fontWeight: "bold" }}>STT</TableCell>
-              <TableCell sx={{ fontWeight: "bold", maxWidth: 300 }}>
-                Thông tin sách điện tử
-              </TableCell>
-              <TableCell sx={{ fontWeight: "bold", minWidth: 200 }}>
-                Thư mục
-              </TableCell>
-              <TableCell sx={{ fontWeight: "bold", minWidth: 200 }}>
-                Khối/Lớp
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {books.map((book, index) => (
-              <BookRow key={book.id} index={index} book={book} />
-            ))}
-          </TableBody>
-        </Table>
-      )}
-    </TableContainer>
+      <TableContainer
+        component={Paper}
+        sx={{
+          maxWidth: 1100,
+          maxHeight: 570,
+          margin: "auto",
+          mt: 1,
+          overflow: "auto",
+        }}
+      >
+        {loading ? (
+          <Typography align="center" sx={{ padding: 2 }}>
+            <CircularProgress />
+          </Typography>
+        ) : (
+          <>
+            <Table stickyHeader>
+              <TableHead>
+                <TableRow sx={{ backgroundColor: "#333" }}>
+                  <TableCell sx={{ fontWeight: "bold" }}>STT</TableCell>
+                  <TableCell sx={{ fontWeight: "bold" }}>
+                    Thông tin sách điện tử
+                  </TableCell>
+                  <TableCell sx={{ fontWeight: "bold", minWidth: 200 }}>
+                    Thư mục
+                  </TableCell>
+                  <TableCell sx={{ fontWeight: "bold", minWidth: 200 }}>
+                    Khối/Lớp
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {books
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((book, index) => (
+                    <BookRow
+                      key={book.id}
+                      index={index + page * rowsPerPage}
+                      book={book}
+                    />
+                  ))}
+              </TableBody>
+            </Table>
+            <TablePagination
+              rowsPerPageOptions={[10, 50, 100]}
+              component="div"
+              count={books.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              sx={{ position: "sticky", bottom: 0, backgroundColor: "white" }}
+            />
+          </>
+        )}
+      </TableContainer>
+    </Box>
   );
 };
 

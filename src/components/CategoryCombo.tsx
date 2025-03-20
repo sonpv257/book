@@ -1,34 +1,31 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FormControl, MenuItem, Select } from "@mui/material";
-import { categoryServices } from "@/services";
-import { Category } from "@/models";
+import { useDataContext } from "@/provider/DataProvider";
 
-const CategoryCombo: React.FC = () => {
-  const [categories, setCategories] = useState<Category[]>([]);
+const CategoryCombo = () => {
+  const { categories } = useDataContext();
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
-  useEffect(() => {
-    const loadCategories = async () => {
-      const data = await categoryServices.fetchCategories();
-      setCategories(data);
-    };
-
-    loadCategories();
-  }, []);
-
   return (
-    <FormControl fullWidth>
+    <FormControl fullWidth size="small" sx={{ minWidth: 120 }}>
       <Select
         labelId="category-label"
         value={selectedCategory}
         onChange={(e) => {
           setSelectedCategory(e.target.value);
         }}
+        sx={{ fontSize: 14 }}
       >
-        <MenuItem value="">-- Chọn thư mục --</MenuItem>
+        <MenuItem value="" sx={{ fontSize: 14 }}>
+          -- Chọn thư mục --
+        </MenuItem>
         {categories.map((category) => (
-          <MenuItem key={category.id} value={category.code}>
+          <MenuItem
+            key={category.id}
+            value={category.code}
+            sx={{ fontSize: 14 }}
+          >
             {category.name}
           </MenuItem>
         ))}

@@ -1,34 +1,27 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FormControl, MenuItem, Select } from "@mui/material";
-import { gradeServices } from "@/services";
-import { Grade } from "@/models";
+import { useDataContext } from "@/provider/DataProvider";
 
-const GradeCombo: React.FC = () => {
-  const [grades, setGrades] = useState<Grade[]>([]);
+const GradeCombo = () => {
+  const { grades } = useDataContext();
   const [selectedGrade, setSelectedGrade] = useState<string>("");
 
-  useEffect(() => {
-    const loaodGrades = async () => {
-      const data = await gradeServices.fetchGrades();
-      setGrades(data);
-    };
-
-    loaodGrades();
-  }, []);
-
   return (
-    <FormControl fullWidth>
+    <FormControl fullWidth size="small" sx={{ minWidth: 120 }}>
       <Select
         labelId="grade-label"
         value={selectedGrade}
         onChange={(e) => {
           setSelectedGrade(e.target.value);
         }}
+        sx={{ fontSize: 14 }}
       >
-        <MenuItem value="">-- Chọn khối/lớp --</MenuItem>
+        <MenuItem value="" sx={{ fontSize: 14 }}>
+          -- Chọn khối/lớp --
+        </MenuItem>
         {grades.map((grade) => (
-          <MenuItem key={grade.id} value={grade.code}>
+          <MenuItem key={grade.id} value={grade.code} sx={{ fontSize: 14 }}>
             {grade.name}
           </MenuItem>
         ))}

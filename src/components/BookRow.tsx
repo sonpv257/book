@@ -5,15 +5,24 @@ import { BookRowProps } from "@/models";
 import CategoryCombo from "@/components/CategoryCombo";
 import GradeCombo from "@/components/GradeCombo";
 
-const BookRow: React.FC<BookRowProps> = ({ book, index }) => {
+const BookRow = ({ book, index }: BookRowProps) => {
   return (
     <TableRow>
       <TableCell>{index + 1}</TableCell>
       <TableCell>
-        <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+        <Typography sx={{ fontWeight: "bold", fontSize: 16 }}>
           {book.title}
         </Typography>
-        <Typography variant="body2" color="textSecondary">
+        <Typography
+          color="textSecondary"
+          sx={{
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            maxWidth: 350,
+            fontSize: 13,
+          }}
+        >
           Tác giả: {book.author}
         </Typography>
       </TableCell>
