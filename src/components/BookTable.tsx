@@ -17,6 +17,8 @@ import { Book } from "@/models";
 import { bookServices } from "@/services";
 import BookRow from "./BookRow";
 import { useHandleChangePage } from "@/hooks";
+import CategoryCombo from "@/components/CategoryCombo";
+import GradeCombo from "@/components/GradeCombo";
 
 const BookTable = () => {
   const [books, setBooks] = useState<Book[]>([]);
@@ -38,13 +40,16 @@ const BookTable = () => {
 
   return (
     <Box>
-      <Typography variant="h6" sx={{ padding: 1, margin: "auto" }}>
+      <Typography
+        variant="h6"
+        sx={{ padding: 1, margin: "auto", fontWeight: "bold" }}
+      >
         Kho học liệu số
       </Typography>
       <TableContainer
         component={Paper}
         sx={{
-          maxWidth: 1100,
+          maxWidth: 1000,
           maxHeight: 570,
           margin: "auto",
           mt: 1,
@@ -60,15 +65,37 @@ const BookTable = () => {
             <Table stickyHeader>
               <TableHead>
                 <TableRow sx={{ backgroundColor: "#333" }}>
-                  <TableCell sx={{ fontWeight: "bold" }}>STT</TableCell>
-                  <TableCell sx={{ fontWeight: "bold" }}>
+                  <TableCell
+                    sx={{ fontWeight: "bold", width: 50, textAlign: "center" }}
+                  >
+                    STT
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      fontWeight: "bold",
+                      maxWidth: 350,
+                      textAlign: "center",
+                    }}
+                  >
                     Thông tin sách điện tử
                   </TableCell>
-                  <TableCell sx={{ fontWeight: "bold", minWidth: 200 }}>
-                    Thư mục
+                  <TableCell
+                    sx={{
+                      fontWeight: "bold",
+                      width: 200,
+                      textAlign: "center",
+                    }}
+                  >
+                    Thư mục <CategoryCombo />
                   </TableCell>
-                  <TableCell sx={{ fontWeight: "bold", minWidth: 200 }}>
-                    Khối/Lớp
+                  <TableCell
+                    sx={{
+                      fontWeight: "bold",
+                      width: 200,
+                      textAlign: "center",
+                    }}
+                  >
+                    Khối/Lớp <GradeCombo />
                   </TableCell>
                 </TableRow>
               </TableHead>

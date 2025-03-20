@@ -3,6 +3,11 @@ import React, { useState } from "react";
 import { FormControl, MenuItem, Select } from "@mui/material";
 import { useDataContext } from "@/provider/DataProvider";
 
+interface CategoryComboProps {
+  selected: string;
+  onChange?: (value: string) => void; 
+}
+
 const CategoryCombo = () => {
   const { categories } = useDataContext();
   const [selectedCategory, setSelectedCategory] = useState<string>("");

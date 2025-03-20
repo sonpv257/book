@@ -8,9 +8,17 @@ import GradeCombo from "@/components/GradeCombo";
 const BookRow = ({ book, index }: BookRowProps) => {
   return (
     <TableRow>
-      <TableCell>{index + 1}</TableCell>
-      <TableCell>
-        <Typography sx={{ fontWeight: "bold", fontSize: 16 }}>
+      <TableCell sx={{ width: 50 }}>{index + 1}</TableCell>
+      <TableCell sx={{ maxWidth: 350 }}>
+        <Typography
+          sx={{
+            fontWeight: "bold",
+            fontSize: 16,
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
           {book.title}
         </Typography>
         <Typography
@@ -26,10 +34,24 @@ const BookRow = ({ book, index }: BookRowProps) => {
           Tác giả: {book.author}
         </Typography>
       </TableCell>
-      <TableCell>
+      <TableCell
+        sx={{
+          maxWidth: 200,
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}
+      >
         <CategoryCombo />
       </TableCell>
-      <TableCell>
+      <TableCell
+        sx={{
+          maxWidth: 200,
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}
+      >
         <GradeCombo />
       </TableCell>
     </TableRow>
