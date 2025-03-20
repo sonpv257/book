@@ -1,6 +1,7 @@
-import BookTable from "@/components/BookTable";
-import BookRow from "@/components/BookRow";
-import CategoryCombo from "@/components/CategoryCombo";
-import GradeCombo from "@/components/GradeCombo";
+import BookTable from "./BookTable";
+import BookRow from "./BookRow";
+import CategoryCombo from "./CategoryCombo";
+import GradeCombo from "./GradeCombo";
+import SearchBooks from "./SearchBooks";
 
-export { BookTable, BookRow, CategoryCombo, GradeCombo };
+export { BookTable, BookRow, CategoryCombo, GradeCombo, SearchBooks };

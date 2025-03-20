@@ -2,7 +2,7 @@ import axios from "axios";
 import { ApiConstant, EnvConstant } from "@/constants/";
 import { Book } from "@/models";
 
-export const fetchBooks = async (): Promise<Book[]> => {
+export const fetchBooks = async (searchKey: string = ""): Promise<Book[]> => {
   try {
     const response = await axios.get<{ data: { data: Book[] } }>(
       `${EnvConstant.API_BASE_URL}${ApiConstant.LIBRARY_API.GET_DOCUMENTS_SHARED}`,
@@ -14,6 +14,7 @@ export const fetchBooks = async (): Promise<Book[]> => {
         },
         params: {
           SchoolCategoryCode: "L1.4",
+          SearchKey: searchKey, 
         },
       }
     );

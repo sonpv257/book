@@ -2,8 +2,7 @@
 import React from "react";
 import { TableCell, TableRow, Typography } from "@mui/material";
 import { BookRowProps } from "@/models";
-import CategoryCombo from "@/components/CategoryCombo";
-import GradeCombo from "@/components/GradeCombo";
+import { CategoryCombo, GradeCombo } from "@/components";
 
 const BookRow = ({ book, index }: BookRowProps) => {
   return (

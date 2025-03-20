@@ -1,3 +1,4 @@
 import useHandleChangePage from "./useHandleChangePage";
+import useSearchBooks from "@/hooks/useSearchBook";
 
-export { useHandleChangePage };
+export { useHandleChangePage, useSearchBooks };
