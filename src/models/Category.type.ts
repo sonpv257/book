@@ -3,3 +3,10 @@ export interface Category {
     name: string;
     code: number;
   }  
+
+  export interface CategoryComboProps {
+    globalValue?: string;
+    onChange?: (value: string) => void;
+    value?: string;
+  }
+  

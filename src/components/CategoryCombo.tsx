@@ -1,20 +1,31 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FormControl, MenuItem, Select } from "@mui/material";
 import { useDataContext } from "@/provider/DataProvider";
+import { CategoryComboProps } from "@/models";
 
-const CategoryCombo = () => {
+const CategoryCombo = ({ globalValue, onChange, value }: CategoryComboProps) => {
   const { categories } = useDataContext();
   const [selectedCategory, setSelectedCategory] = useState<string>("");
+
+  useEffect(() => {
+    if (globalValue !== undefined) {
+      setSelectedCategory(globalValue);
+    }
+  }, [globalValue]);
+
+  const handleChange = (e: any) => {
+    const newValue = e.target.value;
+    setSelectedCategory(newValue);
+    if (onChange) onChange(newValue);
+  };
 
   return (
     <FormControl fullWidth size="small" sx={{ minWidth: 120 }}>
       <Select
         labelId="category-label"
-        value={selectedCategory}
-        onChange={(e) => {
-          setSelectedCategory(e.target.value);
-        }}
+        value={value !== undefined ? value : selectedCategory}
+        onChange={handleChange}
         sx={{ fontSize: 14 }}
       >
         <MenuItem value="" sx={{ fontSize: 14 }}>

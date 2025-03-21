@@ -3,3 +3,9 @@ export interface Grade {
     name: string;
     code: string;
   }  
+
+ export interface GradeComboProps {
+    globalValue?: string;
+    onChange?: (value: string) => void;
+    value?: string;
+  }

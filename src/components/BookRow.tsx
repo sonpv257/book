@@ -4,11 +4,31 @@ import { TableCell, TableRow, Typography } from "@mui/material";
 import { BookRowProps } from "@/models";
 import { CategoryCombo, GradeCombo } from "@/components";
 
-const BookRow = ({ book, index }: BookRowProps) => {
+const BookRow = ({
+  book,
+  index,
+  globalCategory,
+  globalGrade,
+}: BookRowProps) => {
   return (
     <TableRow>
-      <TableCell sx={{ width: 50 }}>{index + 1}</TableCell>
-      <TableCell sx={{ maxWidth: 350 }}>
+      <TableCell
+        sx={{
+          width: "3%",
+          minWidth: "3%",
+          maxWidth: "3%",
+          textAlign: "center",
+        }}
+      >
+        {index + 1}
+      </TableCell>
+      <TableCell
+        sx={{
+          width: "52%",
+          minWidth: "52%",
+          maxWidth: "52%",
+        }}
+      >
         <Typography
           sx={{
             fontWeight: "bold",
@@ -26,7 +46,6 @@ const BookRow = ({ book, index }: BookRowProps) => {
             whiteSpace: "nowrap",
             overflow: "hidden",
             textOverflow: "ellipsis",
-            maxWidth: 350,
             fontSize: 13,
           }}
         >
@@ -35,23 +54,21 @@ const BookRow = ({ book, index }: BookRowProps) => {
       </TableCell>
       <TableCell
         sx={{
-          maxWidth: 200,
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
+          width: "25%",
+          minWidth: "25%",
+          maxWidth: "25%",
         }}
       >
-        <CategoryCombo />
+        <CategoryCombo globalValue={globalCategory} />
       </TableCell>
       <TableCell
-        sx={{
-          maxWidth: 200,
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
+         sx={{
+          width: "20%",
+          minWidth: "20%",
+          maxWidth: "20%",
         }}
       >
-        <GradeCombo />
+        <GradeCombo globalValue={globalGrade} />
       </TableCell>
     </TableRow>
   );

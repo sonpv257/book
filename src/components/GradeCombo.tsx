@@ -1,20 +1,31 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FormControl, MenuItem, Select } from "@mui/material";
 import { useDataContext } from "@/provider/DataProvider";
+import { GradeComboProps } from "@/models";
 
-const GradeCombo = () => {
+const GradeCombo = ({ globalValue, onChange, value }: GradeComboProps) => {
   const { grades } = useDataContext();
   const [selectedGrade, setSelectedGrade] = useState<string>("");
+
+  useEffect(() => {
+    if (globalValue !== undefined) {
+      setSelectedGrade(globalValue);
+    }
+  }, [globalValue]);
+
+  const handleChange = (e: any) => {
+    const newValue = e.target.value;
+    setSelectedGrade(newValue);
+    if (onChange) onChange(newValue);
+  };
 
   return (
     <FormControl fullWidth size="small" sx={{ minWidth: 120 }}>
       <Select
         labelId="grade-label"
-        value={selectedGrade}
-        onChange={(e) => {
-          setSelectedGrade(e.target.value);
-        }}
+        value={value !== undefined ? value : selectedGrade}
+        onChange={handleChange}
         sx={{ fontSize: 14 }}
       >
         <MenuItem value="" sx={{ fontSize: 14 }}>

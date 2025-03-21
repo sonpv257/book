@@ -7,4 +7,6 @@ export interface Book {
 export interface BookRowProps {
   book: Book;
   index: number;
+  globalCategory: string;
+  globalGrade: string;
 }

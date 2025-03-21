@@ -13,25 +13,29 @@ import {
   TablePagination,
   Box,
 } from "@mui/material";
-import { useHandleChangePage } from "@/hooks";
+import { useHandleChangePage, useSearchBooks, useGlobalFilters } from "@/hooks";
 import { BookRow, CategoryCombo, GradeCombo, SearchBooks } from "@/components";
-import { useSearchBooks } from "@/hooks";
 
 const BookTable = () => {
   const { books, loading, handleSearch } = useSearchBooks();
   const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } =
     useHandleChangePage(10);
 
+  const {
+    globalCategory,
+    globalGrade,
+    handleGlobalCategoryChange,
+    handleGlobalGradeChange,
+  } = useGlobalFilters();
+
   return (
-    <Box>
+    <Box sx={{ width: "100%", maxWidth: 1200, margin: "auto" }}>
       <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
           padding: 1,
-          margin: "auto",
-          maxWidth: 1000,
         }}
       >
         <Typography variant="h6" sx={{ fontWeight: "bold" }}>
@@ -43,35 +47,80 @@ const BookTable = () => {
       <TableContainer
         component={Paper}
         sx={{
-          maxWidth: 1000,
-          maxHeight: 570,
-          margin: "auto",
           mt: 1,
-          overflow: "auto",
+          maxHeight: "84vh",
+          width: "100%",
         }}
       >
-        <Table stickyHeader>
+        <Table stickyHeader sx={{ tableLayout: "fixed", width: "100%" }}>
           <TableHead>
-            <TableRow sx={{ backgroundColor: "#333" }}>
+            <TableRow>
               <TableCell
-                sx={{ fontWeight: "bold", width: 50, textAlign: "center" }}
+                sx={{
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  width: "3%",
+                  minWidth: "3%",
+                  maxWidth: "3%",
+                }}
               >
                 STT
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold", maxWidth: 350, textAlign: "center" }}
+                sx={{
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  width: "52%",
+                  minWidth: "52%",
+                  maxWidth: "52%",
+                }}
               >
                 Thông tin sách điện tử
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold", width: 200, textAlign: "center" }}
+                sx={{
+                  width: "25%",
+                  minWidth: "25%",
+                  maxWidth: "25%",
+                }}
               >
-                Thư mục <CategoryCombo />
+                <Box
+                  sx={{
+                    fontSize: 13,
+                    gap: 1,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography sx={{ fontWeight: "bold" }}>Thư mục</Typography>
+                  <CategoryCombo
+                    onChange={handleGlobalCategoryChange}
+                    value={globalCategory}
+                  />
+                </Box>
               </TableCell>
               <TableCell
-                sx={{ fontWeight: "bold", width: 200, textAlign: "center" }}
+                sx={{
+                  width: "20%",
+                  minWidth: "20%",
+                  maxWidth: "20%",
+                }}
               >
-                Khối/Lớp <GradeCombo />
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 1,
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography sx={{ fontWeight: "bold" }}>Khối/Lớp</Typography>
+                  <GradeCombo
+                    onChange={handleGlobalGradeChange}
+                    value={globalGrade}
+                  />
+                </Box>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -92,6 +141,8 @@ const BookTable = () => {
                     key={book.id}
                     index={index + page * rowsPerPage}
                     book={book}
+                    globalCategory={globalCategory}
+                    globalGrade={globalGrade}
                   />
                 ))}
             </TableBody>
