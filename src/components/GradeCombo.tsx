@@ -1,6 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { FormControl, MenuItem, Select } from "@mui/material";
+import {
+  FormControl,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 import { useDataContext } from "@/provider/DataProvider";
 import { GradeComboProps } from "@/models";
 
@@ -14,7 +19,7 @@ const GradeCombo = ({ globalValue, onChange, value }: GradeComboProps) => {
     }
   }, [globalValue]);
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: SelectChangeEvent<string>) => {
     const newValue = e.target.value;
     setSelectedGrade(newValue);
     if (onChange) onChange(newValue);

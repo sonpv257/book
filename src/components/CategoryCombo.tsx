@@ -1,10 +1,19 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { FormControl, MenuItem, Select } from "@mui/material";
+import {
+  FormControl,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 import { useDataContext } from "@/provider/DataProvider";
 import { CategoryComboProps } from "@/models";
 
-const CategoryCombo = ({ globalValue, onChange, value }: CategoryComboProps) => {
+const CategoryCombo = ({
+  globalValue,
+  onChange,
+  value,
+}: CategoryComboProps) => {
   const { categories } = useDataContext();
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
@@ -14,7 +23,7 @@ const CategoryCombo = ({ globalValue, onChange, value }: CategoryComboProps) => 
     }
   }, [globalValue]);
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: SelectChangeEvent<string>) => {
     const newValue = e.target.value;
     setSelectedCategory(newValue);
     if (onChange) onChange(newValue);

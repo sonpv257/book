@@ -5,12 +5,12 @@ import { Book } from "@/models";
 export const fetchBooks = async (searchKey: string = ""): Promise<Book[]> => {
   try {
     const response = await axios.get<{ data: { data: Book[] } }>(
-      `${EnvConstant.API_BASE_URL}${ApiConstant.LIBRARY_API.GET_DOCUMENTS_SHARED}`,
+      `${EnvConstant.ENV.API_BASE_URL}${ApiConstant.LIBRARY_API.GET_DOCUMENTS_SHARED}`,
       {
         headers: {
           Accept: "application/json",
           OrgId: "6304",
-          Authorization: `Bearer ${EnvConstant.AUTHORIZATION_TOKEN}`,
+          Authorization: `Bearer ${EnvConstant.ENV.AUTHORIZATION_TOKEN}`,
         },
         params: {
           SchoolCategoryCode: "L1.4",

@@ -23,7 +23,9 @@ const SearchBooks = ({ onSearch }: SearchBooksProps) => {
           setSearchQuery(e.target.value);
         }}
         onKeyDown={(e) => {
-          e.key === "Enter" && handleSearch();
+          if (e.key === "Enter") {
+            handleSearch();
+          }
         }}
         slotProps={{
           input: {
