@@ -5,12 +5,12 @@ import { Grade } from "@/models";
 export const fetchGrades = async (): Promise<Grade[]> => {
   try {
     const response = await axios.get<{ data: Grade[] }>(
-      `${EnvConstant.API_BASE_URL}${ApiConstant.LIBRARY_API.GET_GRADE_LIST}`,
+      `${EnvConstant.ENV.API_BASE_URL}${ApiConstant.LIBRARY_API.GET_GRADE_LIST}`,
       {
         headers: {
           Accept: "application/json",
           OrgId: "6304",
-          Authorization: `Bearer ${EnvConstant.AUTHORIZATION_TOKEN}`,
+          Authorization: `Bearer ${EnvConstant.ENV.AUTHORIZATION_TOKEN}`,
         },
       }
     );
