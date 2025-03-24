@@ -15,7 +15,7 @@ export const useGlobalFilters = () => {
 
   const handleGlobalBookTypeChange = (value: string) => {
     setGlobalBookType(value);
-  }
+  };
 
   return {
     globalCategory,

@@ -13,23 +13,10 @@ const BookRow = ({
 }: BookRowProps) => {
   return (
     <TableRow>
-      <TableCell
-        sx={{
-          width: "3%",
-          minWidth: "3%",
-          maxWidth: "3%",
-          textAlign: "center",
-        }}
-      >
+      <TableCell sx={{ width: "3%", textAlign: "center" }}>
         {index + 1}
       </TableCell>
-      <TableCell
-        sx={{
-          width: "52%",
-          minWidth: "52%",
-          maxWidth: "52%",
-        }}
-      >
+      <TableCell sx={{ width: "52%" }}>
         <Typography
           sx={{
             fontWeight: "bold",
@@ -53,32 +40,17 @@ const BookRow = ({
           Tác giả: {book.author}
         </Typography>
       </TableCell>
-      <TableCell
-        sx={{
-          width: "20%",
-          minWidth: "20%",
-          maxWidth: "20%",
-        }}
-      >
+      <TableCell sx={{ width: "20%" }}>
         <CategoryCombo globalValue={globalCategory} />
       </TableCell>
-      <TableCell
-        sx={{
-          width: "20%",
-          minWidth: "20%",
-          maxWidth: "20%",
-        }}
-      >
+      <TableCell sx={{ width: "20%" }}>
         <GradeCombo globalValue={globalGrade} />
       </TableCell>
-      <TableCell
-        sx={{
-          width: "20%",
-          minWidth: "20%",
-          maxWidth: "20%",
-        }}
-      >
-        <BookTypeCombo globalValue={globalBookType} />
+      <TableCell sx={{ width: "20%" }}>
+        <BookTypeCombo
+          globalValue={globalBookType}
+          bookTypeCode={book.bookTypeCode}
+        />
       </TableCell>
     </TableRow>
   );

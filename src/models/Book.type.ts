@@ -2,6 +2,7 @@ export interface Book {
   id: number;
   title: string;
   author: string;
+  bookTypeCode: string;
 }
 
 export interface BookRowProps {

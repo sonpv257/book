@@ -8,4 +8,5 @@ export interface BookType {
     globalValue?: string;
     onChange?: (value: string) => void;
     value?: string;
+    bookTypeCode?: string;
   }
