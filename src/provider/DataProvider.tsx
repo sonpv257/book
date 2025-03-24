@@ -1,7 +1,7 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { categoryServices, gradeServices } from "@/services";
-import { Category, DataContextProps, Grade } from "@/models";
+import { booktypeServices, categoryServices, gradeServices } from "@/services";
+import { BookType, Category, DataContextProps, Grade } from "@/models";
 
 const DataContext = createContext<DataContextProps | undefined>(undefined);
 
@@ -10,6 +10,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [grades, setGrades] = useState<Grade[]>([]);
+  const [booktypes, setBookTypes] = useState<BookType[]>([]);
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -22,12 +23,18 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({
       setGrades(data);
     };
 
+    const loadBookTypes = async () => {
+      const data = await booktypeServices.fetchBookTypes();
+      setBookTypes(data);
+    };
+    
+    loadBookTypes();
     loadCategories();
     loadGrades();
   }, []);
 
   return (
-    <DataContext.Provider value={{ categories, grades }}>
+    <DataContext.Provider value={{ categories, grades, booktypes }}>
       {children}
     </DataContext.Provider>
   );

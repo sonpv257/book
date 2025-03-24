@@ -2,13 +2,14 @@
 import React from "react";
 import { TableCell, TableRow, Typography } from "@mui/material";
 import { BookRowProps } from "@/models";
-import { CategoryCombo, GradeCombo } from "@/components";
+import { BookTypeCombo, CategoryCombo, GradeCombo } from "@/components";
 
 const BookRow = ({
   book,
   index,
   globalCategory,
   globalGrade,
+  globalBookType,
 }: BookRowProps) => {
   return (
     <TableRow>
@@ -54,21 +55,30 @@ const BookRow = ({
       </TableCell>
       <TableCell
         sx={{
-          width: "25%",
-          minWidth: "25%",
-          maxWidth: "25%",
+          width: "20%",
+          minWidth: "20%",
+          maxWidth: "20%",
         }}
       >
         <CategoryCombo globalValue={globalCategory} />
       </TableCell>
       <TableCell
-         sx={{
+        sx={{
           width: "20%",
           minWidth: "20%",
           maxWidth: "20%",
         }}
       >
         <GradeCombo globalValue={globalGrade} />
+      </TableCell>
+      <TableCell
+        sx={{
+          width: "20%",
+          minWidth: "20%",
+          maxWidth: "20%",
+        }}
+      >
+        <BookTypeCombo globalValue={globalBookType} />
       </TableCell>
     </TableRow>
   );

@@ -9,4 +9,5 @@ export interface BookRowProps {
   index: number;
   globalCategory: string;
   globalGrade: string;
+  globalBookType: string;
 }

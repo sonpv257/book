@@ -14,7 +14,13 @@ import {
   Box,
 } from "@mui/material";
 import { useHandleChangePage, useSearchBooks, useGlobalFilters } from "@/hooks";
-import { BookRow, CategoryCombo, GradeCombo, SearchBooks } from "@/components";
+import {
+  BookRow,
+  BookTypeCombo,
+  CategoryCombo,
+  GradeCombo,
+  SearchBooks,
+} from "@/components";
 
 const BookTable = () => {
   const { books, loading, handleSearch } = useSearchBooks();
@@ -24,6 +30,8 @@ const BookTable = () => {
   const {
     globalCategory,
     globalGrade,
+    globalBookType,
+    handleGlobalBookTypeChange,
     handleGlobalCategoryChange,
     handleGlobalGradeChange,
   } = useGlobalFilters();
@@ -79,9 +87,9 @@ const BookTable = () => {
               </TableCell>
               <TableCell
                 sx={{
-                  width: "25%",
-                  minWidth: "25%",
-                  maxWidth: "25%",
+                  width: "20%",
+                  minWidth: "20%",
+                  maxWidth: "20%",
                 }}
               >
                 <Box
@@ -122,6 +130,28 @@ const BookTable = () => {
                   />
                 </Box>
               </TableCell>
+              <TableCell
+                sx={{
+                  width: "20%",
+                  minWidth: "20%",
+                  maxWidth: "20%",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 1,
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography sx={{ fontWeight: "bold" }}>Kho sách</Typography>
+                  <BookTypeCombo
+                    onChange={handleGlobalBookTypeChange}
+                    value={globalBookType}
+                  />
+                </Box>
+              </TableCell>
             </TableRow>
           </TableHead>
           {loading ? (
@@ -143,6 +173,7 @@ const BookTable = () => {
                     book={book}
                     globalCategory={globalCategory}
                     globalGrade={globalGrade}
+                    globalBookType={globalBookType}
                   />
                 ))}
             </TableBody>
