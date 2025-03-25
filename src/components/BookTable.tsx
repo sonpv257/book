@@ -147,7 +147,7 @@ const BookTable = () => {
                 >
                   <Typography sx={{ fontWeight: "bold" }}>Kho sách</Typography>
                   <BookTypeCombo
-                    onChange={handleGlobalBookTypeChange}
+                    onChange={(value) => handleGlobalBookTypeChange(value)}
                     value={globalBookType}
                   />
                 </Box>

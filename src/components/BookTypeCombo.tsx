@@ -21,13 +21,10 @@ const BookTypeCombo = ({
   useEffect(() => {
     if (globalValue) {
       setSelectedBookType(globalValue);
-    } else if (bookTypeCode && booktypes.length > 0) {
-      const matchedBookType = booktypes.find((b) => b.code === bookTypeCode);
-      if (matchedBookType) {
-        setSelectedBookType(matchedBookType.code);
-      }
+    } else {
+      setSelectedBookType(bookTypeCode || "");
     }
-  }, [globalValue, bookTypeCode, booktypes]);
+  }, [globalValue, bookTypeCode]);
 
   const handleChange = (e: SelectChangeEvent<string>) => {
     const newValue = e.target.value;
@@ -43,9 +40,11 @@ const BookTypeCombo = ({
         onChange={handleChange}
         sx={{ fontSize: 14 }}
       >
-        <MenuItem value="" sx={{ fontSize: 14 }}>
+        <MenuItem value="rs" sx={{ fontSize: 14 }}>
           -- Chọn kho sách --
         </MenuItem>
+
+        <MenuItem value="rs" sx={{ display: "none" }}></MenuItem>
         {booktypes.map((booktype) => (
           <MenuItem
             key={booktype.id}
