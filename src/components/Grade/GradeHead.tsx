@@ -9,7 +9,7 @@ import {
 import { useDataContext } from "@/provider/DataProvider";
 import { GradeComboProps } from "@/models";
 
-const GradeCombo = ({ globalValue, onChange, value }: GradeComboProps) => {
+const GradeHead = ({ globalValue, onChange, value }: GradeComboProps) => {
   const { grades } = useDataContext();
   const [selectedGrade, setSelectedGrade] = useState<string>("");
 
@@ -28,13 +28,13 @@ const GradeCombo = ({ globalValue, onChange, value }: GradeComboProps) => {
   return (
     <FormControl fullWidth size="small" sx={{ minWidth: 120 }}>
       <Select
-        labelId="grade-label"
+        displayEmpty
         value={value !== undefined ? value : selectedGrade}
         onChange={handleChange}
         sx={{ fontSize: 14 }}
       >
         <MenuItem value="" sx={{ fontSize: 14 }}>
-          -- Chọn khối/lớp --
+          --- Chọn khối/lớp ---
         </MenuItem>
         {grades.map((grade) => (
           <MenuItem key={grade.id} value={grade.code} sx={{ fontSize: 14 }}>
@@ -46,4 +46,4 @@ const GradeCombo = ({ globalValue, onChange, value }: GradeComboProps) => {
   );
 };
 
-export default GradeCombo;
+export default GradeHead;

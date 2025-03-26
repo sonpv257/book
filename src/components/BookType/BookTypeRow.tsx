@@ -9,7 +9,7 @@ import {
 import { useDataContext } from "@/provider/DataProvider";
 import { BookTypeComboProps } from "@/models";
 
-const BookTypeCombo = ({
+const BookTypeRow = ({
   globalValue,
   onChange,
   value,
@@ -35,13 +35,12 @@ const BookTypeCombo = ({
   return (
     <FormControl fullWidth size="small" sx={{ minWidth: 120 }}>
       <Select
-        labelId="booktype-label"
         value={value !== undefined ? value : selectedBookType}
         onChange={handleChange}
         sx={{ fontSize: 14 }}
       >
         <MenuItem value="rs" sx={{ fontSize: 14 }}>
-          -- Chọn kho sách --
+          --- Chọn kho sách ---
         </MenuItem>
 
         <MenuItem value="rs" sx={{ display: "none" }}></MenuItem>
@@ -59,4 +58,4 @@ const BookTypeCombo = ({
   );
 };
 
-export default BookTypeCombo;
+export default BookTypeRow;

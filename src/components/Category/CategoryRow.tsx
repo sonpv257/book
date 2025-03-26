@@ -9,7 +9,7 @@ import {
 import { useDataContext } from "@/provider/DataProvider";
 import { CategoryComboProps } from "@/models";
 
-const CategoryCombo = ({
+const CategoryRow = ({
   globalValue,
   onChange,
   value,
@@ -32,13 +32,12 @@ const CategoryCombo = ({
   return (
     <FormControl fullWidth size="small" sx={{ minWidth: 120 }}>
       <Select
-        labelId="category-label"
         value={value !== undefined ? value : selectedCategory}
         onChange={handleChange}
         sx={{ fontSize: 14 }}
       >
         <MenuItem value="" sx={{ fontSize: 14 }}>
-          -- Chọn thư mục --
+          --- Chọn thư mục ---
         </MenuItem>
         {categories.map((category) => (
           <MenuItem
@@ -54,4 +53,4 @@ const CategoryCombo = ({
   );
 };
 
-export default CategoryCombo;
+export default CategoryRow;

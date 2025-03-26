@@ -14,13 +14,10 @@ import {
   Box,
 } from "@mui/material";
 import { useHandleChangePage, useSearchBooks, useGlobalFilters } from "@/hooks";
-import {
-  BookRow,
-  BookTypeCombo,
-  CategoryCombo,
-  GradeCombo,
-  SearchBooks,
-} from "@/components";
+import { CategoryHead } from "@/components/Category";
+import { GradeHead } from "@/components/Grade";
+import { BookRow, SearchBooks } from "./";
+import { BookTypeHead } from "@/components/BookType";
 
 const BookTable = () => {
   const { books, loading, handleSearch } = useSearchBooks();
@@ -102,7 +99,7 @@ const BookTable = () => {
                   }}
                 >
                   <Typography sx={{ fontWeight: "bold" }}>Thư mục</Typography>
-                  <CategoryCombo
+                  <CategoryHead
                     onChange={handleGlobalCategoryChange}
                     value={globalCategory}
                   />
@@ -124,7 +121,7 @@ const BookTable = () => {
                   }}
                 >
                   <Typography sx={{ fontWeight: "bold" }}>Khối/Lớp</Typography>
-                  <GradeCombo
+                  <GradeHead
                     onChange={handleGlobalGradeChange}
                     value={globalGrade}
                   />
@@ -146,8 +143,10 @@ const BookTable = () => {
                   }}
                 >
                   <Typography sx={{ fontWeight: "bold" }}>Kho sách</Typography>
-                  <BookTypeCombo
-                    onChange={(value) => handleGlobalBookTypeChange(value)}
+                  <BookTypeHead
+                    onChange={(value) => {
+                      handleGlobalBookTypeChange(value);
+                    }}
                     value={globalBookType}
                   />
                 </Box>

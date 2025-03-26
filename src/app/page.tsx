@@ -1,4 +1,4 @@
-import BookTable from "@/components/BookTable";
+import BookTable from "@/components/LayoutTable/TableHead";
 
 export default function Home() {
   return (
