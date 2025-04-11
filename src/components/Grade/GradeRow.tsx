@@ -9,20 +9,22 @@ import {
 import { useDataContext } from "@/provider/DataProvider";
 import { GradeComboProps } from "@/models";
 
-const GradeRow = ({ globalValue, onChange, value }: GradeComboProps) => {
+const GradeRow = ({ gradeCode, globalValue, onChange, value }: GradeComboProps) => {
   const { grades } = useDataContext();
   const [selectedGrade, setSelectedGrade] = useState<string>("");
 
   useEffect(() => {
-    if (globalValue !== undefined) {
+    if (globalValue) {
       setSelectedGrade(globalValue);
+    } else {
+      setSelectedGrade(gradeCode || "");
     }
-  }, [globalValue]);
+  }, [globalValue, gradeCode]);
 
   const handleChange = (e: SelectChangeEvent<string>) => {
     const newValue = e.target.value;
     setSelectedGrade(newValue);
-    if (onChange) onChange(newValue);
+    if (onChange) onChange(newValue); // Chỉ cập nhật khi thay đổi thủ công
   };
 
   return (

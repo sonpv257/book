@@ -40,7 +40,7 @@ const BookTypeHead = ({ globalValue, onChange, value }: BookTypeComboProps) => {
           )
         }
       >
-        <MenuItem value="--- Chọn kho sách ---" sx={{ fontSize: 14 }}>
+        <MenuItem value="" sx={{ fontSize: 14 }}>
           --- Chọn kho sách ---
         </MenuItem>
         {booktypes.map((booktype) => (

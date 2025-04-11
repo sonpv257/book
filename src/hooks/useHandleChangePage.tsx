@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const useHandleChangePage = (initialRowsPerPage = 10) => {
+const useHandleChangePage = (initialRowsPerPage = 50) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(initialRowsPerPage);
 

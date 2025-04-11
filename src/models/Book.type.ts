@@ -1,14 +1,24 @@
 export interface Book {
-  id: number;
+  id: string;
   title: string;
   author: string;
   bookTypeCode: string;
+  gradeCode: string;
+  category: string;
+  grade: string; 
 }
 
 export interface BookRowProps {
   book: Book;
   index: number;
-  globalCategory: string;
-  globalGrade: string;
-  globalBookType: string;
+  page:number;
+  rowsPerPage:number;
+  selected: boolean;
+  onSelect: () => void;
+  category: string;
+  grade: string;
+  bookType: string;
+  onCategoryChange: (val: string) => void;
+  onGradeChange: (val: string) => void;
+  onBookTypeChange: (val: string) => void;
 }

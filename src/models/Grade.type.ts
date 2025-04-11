@@ -5,6 +5,7 @@ export interface Grade {
   }  
 
  export interface GradeComboProps {
+    gradeCode?: string;
     globalValue?: string;
     onChange?: (value: string) => void;
     value?: string;
