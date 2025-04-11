@@ -13,7 +13,7 @@ export const fetchBooks = async (searchKey: string = ""): Promise<Book[]> => {
           Authorization: `Bearer ${EnvConstant.ENV.AUTHORIZATION_TOKEN}`,
         },
         params: {
-          SchoolCategoryCode: "L1.4",
+          //SchoolCategoryCode: "L1.4",
           SearchKey: searchKey, 
         },
       }

@@ -11,7 +11,7 @@ const useHandleChangePage = (initialRowsPerPage = 10) => {
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(parseInt(event.target.value, 50));
     setPage(0);
   };
 

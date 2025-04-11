@@ -26,7 +26,7 @@ const CategoryRow = ({
   const handleChange = (e: SelectChangeEvent<string>) => {
     const newValue = e.target.value;
     setSelectedCategory(newValue);
-    if (onChange) onChange(newValue);
+    if (onChange) onChange(newValue); 
   };
 
   return (

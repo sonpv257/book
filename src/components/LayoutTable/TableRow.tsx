@@ -1,22 +1,30 @@
 "use client";
 import React from "react";
-import { TableCell, TableRow, Typography } from "@mui/material";
+import { TableCell, TableRow, Typography, Checkbox } from "@mui/material";
 import { BookRowProps } from "@/models";
 import { CategoryRow } from "@/components/Category";
 import { GradeRow } from "@/components/Grade";
 import { BookTypeRow } from "@/components/BookType";
 
-const BookRow = ({
+const BookRow: React.FC<BookRowProps> = ({
   book,
   index,
-  globalCategory,
-  globalGrade,
-  globalBookType,
-}: BookRowProps) => {
+  selected,
+  onSelect,
+  category,
+  grade,
+  bookType,
+  onCategoryChange,
+  onGradeChange,
+  onBookTypeChange,
+}) => {
   return (
-    <TableRow>
+    <TableRow hover>
       <TableCell sx={{ width: "3%", textAlign: "center" }}>
         {index + 1}
+      </TableCell>
+      <TableCell padding="checkbox">
+        <Checkbox checked={selected} onChange={onSelect} />
       </TableCell>
       <TableCell sx={{ width: "52%" }}>
         <Typography
@@ -30,28 +38,35 @@ const BookRow = ({
         >
           {book.title}
         </Typography>
-        <Typography
-          color="textSecondary"
-          sx={{
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            fontSize: 13,
-          }}
-        >
-          Tác giả: {book.author}
-        </Typography>
+        {book.author && (
+          <Typography
+            color="textSecondary"
+            sx={{
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              fontSize: 13,
+            }}
+          >
+            Tác giả: {book.author}
+          </Typography>
+        )}
       </TableCell>
       <TableCell sx={{ width: "20%" }}>
-        <CategoryRow globalValue={globalCategory} />
+        <CategoryRow value={category} onChange={onCategoryChange} />
       </TableCell>
       <TableCell sx={{ width: "20%" }}>
-        <GradeRow globalValue={globalGrade} />
+        <GradeRow
+          value={grade}
+          gradeCode={book.gradeCode}
+          onChange={onGradeChange}
+        />
       </TableCell>
       <TableCell sx={{ width: "20%" }}>
         <BookTypeRow
-          globalValue={globalBookType}
+          value={bookType}
           bookTypeCode={book.bookTypeCode}
+          onChange={onBookTypeChange}
         />
       </TableCell>
     </TableRow>

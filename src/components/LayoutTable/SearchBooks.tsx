@@ -16,6 +16,7 @@ const SearchBooks = ({ onSearch }: SearchBooksProps) => {
       <TextField
         variant="outlined"
         fullWidth
+        size="small"
         value={searchQuery}
         autoComplete="off"
         placeholder="Tìm kiếm ..."

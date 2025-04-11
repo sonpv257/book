@@ -32,6 +32,13 @@ const GradeHead = ({ globalValue, onChange, value }: GradeComboProps) => {
         value={value !== undefined ? value : selectedGrade}
         onChange={handleChange}
         sx={{ fontSize: 14 }}
+        renderValue={(selected) =>
+          selected ? (
+            grades.find((g) => g.code === selected)?.name || selected
+          ) : (
+            <span>--- Chọn khối/lớp ---</span>
+          )
+        }
       >
         <MenuItem value="" sx={{ fontSize: 14 }}>
           --- Chọn khối/lớp ---

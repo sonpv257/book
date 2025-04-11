@@ -39,11 +39,9 @@ const BookTypeRow = ({
         onChange={handleChange}
         sx={{ fontSize: 14 }}
       >
-        <MenuItem value="rs" sx={{ fontSize: 14 }}>
+        <MenuItem value="" sx={{ fontSize: 14 }}>
           --- Chọn kho sách ---
         </MenuItem>
-
-        <MenuItem value="rs" sx={{ display: "none" }}></MenuItem>
         {booktypes.map((booktype) => (
           <MenuItem
             key={booktype.id}
