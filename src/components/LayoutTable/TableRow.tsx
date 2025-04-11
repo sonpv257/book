@@ -1,14 +1,16 @@
 "use client";
-import React from "react";
+import React, { memo } from "react";
 import { TableCell, TableRow, Typography, Checkbox } from "@mui/material";
 import { BookRowProps } from "@/models";
 import { CategoryRow } from "@/components/Category";
 import { GradeRow } from "@/components/Grade";
 import { BookTypeRow } from "@/components/BookType";
 
-const BookRow: React.FC<BookRowProps> = ({
+const BookRow = ({
   book,
+  page,
   index,
+  rowsPerPage,
   selected,
   onSelect,
   category,
@@ -17,11 +19,11 @@ const BookRow: React.FC<BookRowProps> = ({
   onCategoryChange,
   onGradeChange,
   onBookTypeChange,
-}) => {
+}: BookRowProps) => {
   return (
     <TableRow hover>
       <TableCell sx={{ width: "3%", textAlign: "center" }}>
-        {index + 1}
+        {page * rowsPerPage + index + 1}
       </TableCell>
       <TableCell padding="checkbox">
         <Checkbox checked={selected} onChange={onSelect} />
@@ -73,4 +75,12 @@ const BookRow: React.FC<BookRowProps> = ({
   );
 };
 
-export default BookRow;
+export default memo(
+  BookRow,
+  (prev, next) =>
+    prev.book.id === next.book.id &&
+    prev.selected === next.selected &&
+    prev.category === next.category &&
+    prev.grade === next.grade &&
+    prev.bookType === next.bookType
+);

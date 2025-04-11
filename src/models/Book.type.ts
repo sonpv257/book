@@ -11,6 +11,8 @@ export interface Book {
 export interface BookRowProps {
   book: Book;
   index: number;
+  page:number;
+  rowsPerPage:number;
   selected: boolean;
   onSelect: () => void;
   category: string;

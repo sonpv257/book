@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const useHandleChangePage = (initialRowsPerPage = 10) => {
+const useHandleChangePage = (initialRowsPerPage = 50) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(initialRowsPerPage);
 
@@ -11,7 +11,7 @@ const useHandleChangePage = (initialRowsPerPage = 10) => {
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setRowsPerPage(parseInt(event.target.value, 50));
+    setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 

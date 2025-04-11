@@ -15,7 +15,12 @@ import {
   Checkbox,
   Button,
 } from "@mui/material";
-import { useHandleChangePage, useSearchBooks, useGlobalFilters } from "@/hooks";
+import {
+  useSearchBooks,
+  useHandleChangePage,
+  useRowAndHeadSync,
+  useSelection,
+} from "@/hooks";
 import { CategoryHead } from "@/components/Category";
 import { GradeHead } from "@/components/Grade";
 import { BookTypeHead } from "@/components/BookType";
@@ -25,63 +30,19 @@ const BookTable = () => {
   const { books, loading, handleSearch } = useSearchBooks();
   const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } =
     useHandleChangePage(50);
-  const {
-    globalCategory,
-    globalGrade,
-    globalBookType,
-    handleGlobalBookTypeChange,
-    handleGlobalCategoryChange,
-    handleGlobalGradeChange,
-  } = useGlobalFilters();
 
-  const [selectedBookIds, setSelectedBookIds] = useState<string[]>([]);
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [lastChangedData, setLastChangedData] = useState<
-    Record<
-      string,
-      {
-        category?: string;
-        grade?: string;
-        bookType?: string;
-        timestamp?: number;
-      }
-    >
-  >({});
-  const [lastGlobalChange, setLastGlobalChange] = useState<{
-    category?: { value: string; timestamp: number };
-    grade?: { value: string; timestamp: number };
-    bookType?: { value: string; timestamp: number };
-  }>({});
+  const { handleGlobalChange, getLatestValue, setLastChangedData } =
+    useRowAndHeadSync(page);
 
   const currentPageBooks = books.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
 
-  const isAllSelected =
-    currentPageBooks.length > 0 &&
-    currentPageBooks.every((book) => selectedBookIds.includes(book.id));
+  const { selectedBookIds, isAllSelected, handleSelectAll, handleSelectOne } =
+    useSelection(currentPageBooks, page);
 
-  const handleSelectAll = () => {
-    if (isAllSelected) {
-      setSelectedBookIds((prev) =>
-        prev.filter((id) => !currentPageBooks.some((b) => b.id === id))
-      );
-    } else {
-      const newIds = currentPageBooks
-        .map((book) => book.id)
-        .filter((id) => !selectedBookIds.includes(id));
-      setSelectedBookIds([...selectedBookIds, ...newIds]);
-    }
-  };
-
-  const handleSelectOne = (id: string) => {
-    setSelectedBookIds((prev) =>
-      prev.includes(id) ? prev.filter((bookId) => bookId !== id) : [...prev, id]
-    );
-  };
-
-  const now = () => new Date().getTime();
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleRowChange = (
     bookId: string,
@@ -93,65 +54,10 @@ const BookTable = () => {
       [bookId]: {
         ...prev[bookId],
         [field]: value,
-        timestamp: now(),
+        timestamp: Date.now(),
       },
     }));
   };
-
-  const handleGlobalChange = (
-    type: "category" | "grade" | "bookType",
-    value: string
-  ) => {
-    const time = now();
-    if (type === "category") {
-      handleGlobalCategoryChange(value);
-      setLastGlobalChange((prev) => ({
-        ...prev,
-        category: { value, timestamp: time },
-      }));
-    } else if (type === "grade") {
-      handleGlobalGradeChange(value);
-      setLastGlobalChange((prev) => ({
-        ...prev,
-        grade: { value, timestamp: time },
-      }));
-    } else {
-      handleGlobalBookTypeChange(value);
-      setLastGlobalChange((prev) => ({
-        ...prev,
-        bookType: { value, timestamp: time },
-      }));
-    }
-  };
-
-  const getLatestValue = (
-    bookId: string,
-    type: "category" | "grade" | "bookType",
-    fallback: string
-  ) => {
-    const row = lastChangedData[bookId];
-    const global = lastGlobalChange[type];
-    const rowValue = row?.[type];
-    const rowTime = row?.timestamp ?? 0;
-    const globalValue = global?.value;
-    const globalTime = global?.timestamp ?? 0;
-
-    if (rowValue !== undefined && rowTime >= globalTime) return rowValue;
-    if (globalValue !== undefined) return globalValue;
-    return fallback;
-  };
-
-  useEffect(() => {
-    handleGlobalCategoryChange("");
-    handleGlobalGradeChange("");
-    handleGlobalBookTypeChange("");
-    setLastGlobalChange({});
-  }, [
-    page,
-    handleGlobalCategoryChange,
-    handleGlobalGradeChange,
-    handleGlobalBookTypeChange,
-  ]);
 
   return (
     <Box sx={{ width: "100%", maxWidth: 1200, margin: "auto" }}>
@@ -214,7 +120,6 @@ const BookTable = () => {
                 >
                   <Typography sx={{ fontWeight: "bold" }}>Thư mục</Typography>
                   <CategoryHead
-                    value={globalCategory}
                     onChange={(val) => {
                       handleGlobalChange("category", val);
                     }}
@@ -232,7 +137,6 @@ const BookTable = () => {
                 >
                   <Typography sx={{ fontWeight: "bold" }}>Khối/Lớp</Typography>
                   <GradeHead
-                    value={globalGrade}
                     onChange={(val) => {
                       handleGlobalChange("grade", val);
                     }}
@@ -250,7 +154,6 @@ const BookTable = () => {
                 >
                   <Typography sx={{ fontWeight: "bold" }}>Kho sách</Typography>
                   <BookTypeHead
-                    value={globalBookType}
                     onChange={(val) => {
                       handleGlobalChange("bookType", val);
                     }}
@@ -267,38 +170,50 @@ const BookTable = () => {
                 </TableCell>
               </TableRow>
             ) : (
-              currentPageBooks.map((book, index) => (
-                <BookRow
-                  key={book.id}
-                  index={index}
-                  book={book}
-                  selected={selectedBookIds.includes(book.id)}
-                  onSelect={() => {
-                    handleSelectOne(book.id);
-                  }}
-                  category={getLatestValue(book.id, "category", "")}
-                  grade={getLatestValue(book.id, "grade", book.gradeCode || "")}
-                  bookType={getLatestValue(
-                    book.id,
-                    "bookType",
-                    book.bookTypeCode || ""
-                  )}
-                  onCategoryChange={(val) =>
-                    handleRowChange(book.id, "category", val)
-                  }
-                  onGradeChange={(val) =>
-                    handleRowChange(book.id, "grade", val)
-                  }
-                  onBookTypeChange={(val) =>
-                    handleRowChange(book.id, "bookType", val)
-                  }
-                />
-              ))
+              currentPageBooks.map((book, index) => {
+                const latestCategory = getLatestValue(book.id, "category", "");
+                const latestGrade = getLatestValue(
+                  book.id,
+                  "grade",
+                  book.gradeCode || ""
+                );
+                const latestBookType = getLatestValue(
+                  book.id,
+                  "bookType",
+                  book.bookTypeCode || ""
+                );
+
+                return (
+                  <BookRow
+                    key={book.id}
+                    index={index}
+                    book={book}
+                    page={page}
+                    rowsPerPage={rowsPerPage}
+                    selected={selectedBookIds.includes(book.id)}
+                    onSelect={() => {
+                      handleSelectOne(book.id);
+                    }}
+                    category={latestCategory}
+                    grade={latestGrade}
+                    bookType={latestBookType}
+                    onCategoryChange={(val) =>
+                      handleRowChange(book.id, "category", val)
+                    }
+                    onGradeChange={(val) =>
+                      handleRowChange(book.id, "grade", val)
+                    }
+                    onBookTypeChange={(val) =>
+                      handleRowChange(book.id, "bookType", val)
+                    }
+                  />
+                );
+              })
             )}
           </TableBody>
         </Table>
         <TablePagination
-          rowsPerPageOptions={[10, 50, 100]}
+          rowsPerPageOptions={[50, 100]}
           component="div"
           count={books.length}
           rowsPerPage={rowsPerPage}
@@ -310,9 +225,7 @@ const BookTable = () => {
       </TableContainer>
       <CopyBook
         open={dialogOpen}
-        onClose={() => {
-          setDialogOpen(false);
-        }}
+        onClose={() => setDialogOpen(false)}
         selectedBookIds={selectedBookIds}
         books={books}
         getLatestValue={getLatestValue}

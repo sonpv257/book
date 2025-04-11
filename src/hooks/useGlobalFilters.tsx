@@ -1,21 +1,21 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
-export const useGlobalFilters = () => {
+const useGlobalFilters = () => {
   const [globalCategory, setGlobalCategory] = useState<string>("");
   const [globalGrade, setGlobalGrade] = useState<string>("");
   const [globalBookType, setGlobalBookType] = useState<string>("");
 
-  const handleGlobalCategoryChange = (value: string) => {
+  const handleGlobalCategoryChange = useCallback((value: string) => {
     setGlobalCategory(value);
-  };
+  }, []);
 
-  const handleGlobalGradeChange = (value: string) => {
+  const handleGlobalGradeChange = useCallback((value: string) => {
     setGlobalGrade(value);
-  };
+  }, []);
 
-  const handleGlobalBookTypeChange = (value: string) => {
+  const handleGlobalBookTypeChange = useCallback((value: string) => {
     setGlobalBookType(value);
-  };
+  }, []);
 
   return {
     globalCategory,
@@ -26,3 +26,5 @@ export const useGlobalFilters = () => {
     handleGlobalGradeChange,
   };
 };
+
+export default useGlobalFilters;

@@ -12,13 +12,13 @@ import {
 import { CopyBookProps } from "@/models";
 import { useDataContext } from "@/provider/DataProvider";
 
-const CopyBook: React.FC<CopyBookProps> = ({
+const CopyBook = ({
   open,
   onClose,
   selectedBookIds,
   books,
   getLatestValue,
-}) => {
+}: CopyBookProps) => {
   const { categories, grades, booktypes } = useDataContext();
 
   const getCategoryName = (code: string) =>
@@ -44,7 +44,7 @@ const CopyBook: React.FC<CopyBookProps> = ({
               <Typography>
                 <strong>{book.title}</strong>
               </Typography>
-              {book.author && <Typography>Tác giả: {book.author}</Typography>}
+              {book.author && <Typography fontSize={12}>Tác giả: {book.author}</Typography>}
               <Typography>Thư mục: {getCategoryName(cat)}</Typography>
               <Typography>Khối/Lớp: {getGradeName(grd)}</Typography>
               <Typography>Kho sách: {getBookTypeName(typ)}</Typography>
