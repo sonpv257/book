@@ -31,7 +31,7 @@ const BookTable = () => {
   const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } =
     useHandleChangePage(50);
 
-  const { handleGlobalChange, getLatestValue, setLastChangedData } =
+  const { handleGlobalChange, getLatestValue, setLastChangedData, resetAll } =
     useRowAndHeadSync(page);
 
   const currentPageBooks = books.slice(
@@ -55,6 +55,7 @@ const BookTable = () => {
         ...prev[bookId],
         [field]: value,
         [`${field}Timestamp`]: Date.now(),
+        timestamp: Date.now(),
       },
     }));
   };
@@ -73,7 +74,11 @@ const BookTable = () => {
           Kho học liệu số
         </Typography>
         <Box sx={{ display: "flex", gap: 1 }}>
-          <SearchBooks onSearch={handleSearch} loading={loading} />
+          <SearchBooks
+            onSearch={handleSearch}
+            loading={loading}
+            onResetFilters={resetAll}
+          />
           <Button
             variant="contained"
             onClick={() => {
