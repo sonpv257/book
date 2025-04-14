@@ -35,6 +35,7 @@ const BookTypeRow = ({
   return (
     <FormControl fullWidth size="small" sx={{ minWidth: 120 }}>
       <Select
+       labelId="booktype-label"
         value={value !== undefined ? value : selectedBookType}
         onChange={handleChange}
         sx={{ fontSize: 14 }}

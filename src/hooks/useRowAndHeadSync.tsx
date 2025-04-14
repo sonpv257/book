@@ -12,6 +12,9 @@ const useRowAndHeadSync = (page: number) => {
       category?: string;
       grade?: string;
       bookType?: string;
+      categoryTimestamp?: number;
+      gradeTimestamp?: number;
+      bookTypeTimestamp?: number;
       timestamp: number;
     };
   }>({});
@@ -54,7 +57,7 @@ const useRowAndHeadSync = (page: number) => {
       const row = lastChangedData[bookId];
       const global = lastGlobalChange[type];
       const rowValue = row?.[type];
-      const rowTime = row?.timestamp ?? 0;
+      const rowTime = row?.[`${type}Timestamp`] ?? 0;
       const globalValue = global?.value;
       const globalTime = global?.timestamp ?? 0;
 

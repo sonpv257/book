@@ -9,7 +9,12 @@ import {
 import { useDataContext } from "@/provider/DataProvider";
 import { GradeComboProps } from "@/models";
 
-const GradeRow = ({ gradeCode, globalValue, onChange, value }: GradeComboProps) => {
+const GradeRow = ({
+  gradeCode,
+  globalValue,
+  onChange,
+  value,
+}: GradeComboProps) => {
   const { grades } = useDataContext();
   const [selectedGrade, setSelectedGrade] = useState<string>("");
 
@@ -24,7 +29,7 @@ const GradeRow = ({ gradeCode, globalValue, onChange, value }: GradeComboProps) 
   const handleChange = (e: SelectChangeEvent<string>) => {
     const newValue = e.target.value;
     setSelectedGrade(newValue);
-    if (onChange) onChange(newValue); // Chỉ cập nhật khi thay đổi thủ công
+    if (onChange) onChange(newValue);
   };
 
   return (

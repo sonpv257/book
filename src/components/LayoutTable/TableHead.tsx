@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Box,
   CircularProgress,
@@ -54,7 +54,7 @@ const BookTable = () => {
       [bookId]: {
         ...prev[bookId],
         [field]: value,
-        timestamp: Date.now(),
+        [`${field}Timestamp`]: Date.now(),
       },
     }));
   };
