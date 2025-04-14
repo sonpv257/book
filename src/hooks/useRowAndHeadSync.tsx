@@ -7,11 +7,15 @@ const useRowAndHeadSync = (page: number) => {
     handleGlobalGradeChange,
     handleGlobalBookTypeChange,
   } = useGlobalFilters();
+
   const [lastChangedData, setLastChangedData] = useState<{
     [key: string]: {
       category?: string;
       grade?: string;
       bookType?: string;
+      categoryTimestamp?: number;
+      gradeTimestamp?: number;
+      bookTypeTimestamp?: number;
       timestamp: number;
     };
   }>({});
@@ -22,28 +26,35 @@ const useRowAndHeadSync = (page: number) => {
 
   const now = () => new Date().getTime();
 
-  const handleGlobalChange = (
-    type: "category" | "grade" | "bookType",
-    value: string
-  ) => {
-    const timestamp = now();
-    if (type === "category") {
-      handleGlobalCategoryChange(value);
-      setLastGlobalChange((prev) => ({
-        ...prev,
-        category: { value, timestamp },
-      }));
-    } else if (type === "grade") {
-      handleGlobalGradeChange(value);
-      setLastGlobalChange((prev) => ({ ...prev, grade: { value, timestamp } }));
-    } else {
-      handleGlobalBookTypeChange(value);
-      setLastGlobalChange((prev) => ({
-        ...prev,
-        bookType: { value, timestamp },
-      }));
-    }
-  };
+  const handleGlobalChange = useCallback(
+    (type: "category" | "grade" | "bookType", value: string) => {
+      const timestamp = now();
+      if (type === "category") {
+        handleGlobalCategoryChange(value);
+        setLastGlobalChange((prev) => ({
+          ...prev,
+          category: { value, timestamp },
+        }));
+      } else if (type === "grade") {
+        handleGlobalGradeChange(value);
+        setLastGlobalChange((prev) => ({
+          ...prev,
+          grade: { value, timestamp },
+        }));
+      } else {
+        handleGlobalBookTypeChange(value);
+        setLastGlobalChange((prev) => ({
+          ...prev,
+          bookType: { value, timestamp },
+        }));
+      }
+    },
+    [
+      handleGlobalCategoryChange,
+      handleGlobalGradeChange,
+      handleGlobalBookTypeChange,
+    ]
+  );
 
   const getLatestValue = useCallback(
     (
@@ -54,7 +65,7 @@ const useRowAndHeadSync = (page: number) => {
       const row = lastChangedData[bookId];
       const global = lastGlobalChange[type];
       const rowValue = row?.[type];
-      const rowTime = row?.timestamp ?? 0;
+      const rowTime = row?.[`${type}Timestamp`] ?? 0;
       const globalValue = global?.value;
       const globalTime = global?.timestamp ?? 0;
 
@@ -65,23 +76,28 @@ const useRowAndHeadSync = (page: number) => {
     [lastChangedData, lastGlobalChange]
   );
 
-  useEffect(() => {
+  const resetAll = useCallback(() => {
     handleGlobalCategoryChange("");
     handleGlobalGradeChange("");
     handleGlobalBookTypeChange("");
     setLastGlobalChange({});
+    setLastChangedData({});
   }, [
-    page,
     handleGlobalCategoryChange,
     handleGlobalGradeChange,
     handleGlobalBookTypeChange,
   ]);
+
+  useEffect(() => {
+    resetAll();
+  }, [page, resetAll]);
 
   return {
     lastChangedData,
     handleGlobalChange,
     getLatestValue,
     setLastChangedData,
+    resetAll,
   };
 };
 

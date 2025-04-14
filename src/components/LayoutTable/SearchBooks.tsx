@@ -4,11 +4,12 @@ import { Box, IconButton, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { SearchBooksProps } from "@/models";
 
-const SearchBooks = ({ onSearch }: SearchBooksProps) => {
+const SearchBooks = ({ onSearch, onResetFilters }: SearchBooksProps) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = () => {
     onSearch(searchQuery.trim());
+    onResetFilters?.();
   };
 
   return (

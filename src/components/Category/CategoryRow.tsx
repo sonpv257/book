@@ -9,11 +9,7 @@ import {
 import { useDataContext } from "@/provider/DataProvider";
 import { CategoryComboProps } from "@/models";
 
-const CategoryRow = ({
-  globalValue,
-  onChange,
-  value,
-}: CategoryComboProps) => {
+const CategoryRow = ({ globalValue, onChange, value }: CategoryComboProps) => {
   const { categories } = useDataContext();
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
@@ -26,12 +22,13 @@ const CategoryRow = ({
   const handleChange = (e: SelectChangeEvent<string>) => {
     const newValue = e.target.value;
     setSelectedCategory(newValue);
-    if (onChange) onChange(newValue); 
+    if (onChange) onChange(newValue);
   };
 
   return (
     <FormControl fullWidth size="small" sx={{ minWidth: 120 }}>
       <Select
+        labelId="category-label"
         value={value !== undefined ? value : selectedCategory}
         onChange={handleChange}
         sx={{ fontSize: 14 }}
