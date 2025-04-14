@@ -60,7 +60,7 @@ const BookTable = () => {
   };
 
   return (
-    <Box sx={{ width: "100%", maxWidth: 1200, margin: "auto" }}>
+    <Box sx={{ width: "100%", maxWidth: 1250, margin: "auto" }}>
       <Box
         sx={{
           display: "flex",
